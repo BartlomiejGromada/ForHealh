@@ -1,24 +1,29 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
-
-import { useColorScheme } from '@/hooks/useColorScheme';
+import { SessionProvider } from "@/providers/SessionProvider";
+import "@/utils/language/i18nConfig"; // This line imports the i18n configuration
+import { useFonts } from "expo-font";
+import { Slot } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
+import { useColorScheme } from "nativewind";
+import { useEffect } from "react";
+import "react-native-reanimated";
+import "../global.css";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
+  const { setColorScheme } = useColorScheme();
+
   const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    "Lato-Regular": require("../assets/fonts/Lato-Regular.ttf"),
+    "Lato-Bold": require("../assets/fonts/Lato-Bold.ttf"),
+    "Lato-Thin": require("../assets/fonts/Lato-Thin.ttf"),
+    "Lato-Light": require("../assets/fonts/Lato-Light.ttf"),
   });
 
   useEffect(() => {
     if (loaded) {
+      setColorScheme("light"); // Default light theme
       SplashScreen.hideAsync();
     }
   }, [loaded]);
@@ -28,12 +33,8 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <SessionProvider>
+      <Slot />
+    </SessionProvider>
   );
 }
