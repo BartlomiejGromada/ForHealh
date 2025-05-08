@@ -12,6 +12,7 @@ import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { ScrollView, View } from "react-native";
 import { z } from "zod";
+import { signIn } from "../api/auth-api";
 
 type SignInFormType = {
   email: string;
@@ -36,9 +37,9 @@ export default function SignInForm() {
     },
   });
 
-  const onHandleSubmit = (data: SignInFormType) => {
-    //TODO: Send request to firebase auth
-    console.log(data);
+  const onHandleSubmit = async (data: SignInFormType) => {
+    console.log("XDDDDD");
+    await signIn(data.email, data.password);
   };
 
   return (
