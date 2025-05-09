@@ -1,19 +1,36 @@
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { FirebaseError, FirebaseReponse, User } from "@/types/Firebase";
+import { auth } from "@/utils/firebase/firebaseConfig";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
-export async function signIn(email: string, password: string) {
-  return signInWithEmailAndPassword(getAuth(), email, password)
-    .then((userCredential) => {
+type SignInRepsonse =
+  | (FirebaseReponse & { status: "SUCCESS"; user: User })
+  | (FirebaseReponse & { status: "ERROR"; error: FirebaseError });
+
+export async function signInRequest(email: string, password: string): Promise<SignInRepsonse> {
+  return signInWithEmailAndPassword(auth, email, password)
+    .then(userCredential => {
       const user = userCredential.user;
 
-      console.log("user", user);
-      return user;
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
+      const reponse: SignInRepsonse = {
+        status: "SUCCESS",
+        user: {
+          uid: user.uid,
+          name: user.displayName ?? "-",
+          email: user.email ?? "-",
+        },
+      };
 
-      console.log("errorCode", errorCode);
-      console.log("errorMessage", errorMessage);
-      return { errorCode, errorMessage };
+      return reponse;
+    })
+    .catch(error => {
+      const reponse: SignInRepsonse = {
+        status: "ERROR",
+        error: {
+          code: (error.code as string) ?? "unknown-code",
+          message: (error.message as string) ?? "unexpected-error",
+        },
+      };
+
+      return reponse;
     });
 }

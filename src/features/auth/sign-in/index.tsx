@@ -10,9 +10,9 @@ import { MailIcon } from "lucide-react-native";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { ScrollView, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import { z } from "zod";
-import { signIn } from "../api/auth-api";
+import useSignIn from "../hooks/useSignIn";
 
 type SignInFormType = {
   email: string;
@@ -37,8 +37,9 @@ export default function SignInForm() {
     },
   });
 
+  const { user, signIn, isLoading, error } = useSignIn();
+
   const onHandleSubmit = async (data: SignInFormType) => {
-    console.log("XDDDDD");
     await signIn(data.email, data.password);
   };
 
@@ -47,10 +48,7 @@ export default function SignInForm() {
       <ScrollView>
         <View className="gap-4">
           <View className="gap-2">
-            <TextStyled
-              type="bold"
-              className="text-3xl dark:color-typography-white"
-            >
+            <TextStyled type="bold" className="text-3xl dark:color-typography-white">
               {t("auth.login")}
             </TextStyled>
             <TextStyled className="text-sm color-typography-400">
@@ -75,6 +73,7 @@ export default function SignInForm() {
                   autoCapitalize="none"
                   placeholder={t("auth.email")}
                   Icon={MailIcon}
+                  editable={!isLoading}
                 />
               )}
             />
@@ -95,6 +94,7 @@ export default function SignInForm() {
                   errors={errors.password}
                   autoCapitalize="none"
                   placeholder={t("auth.password")}
+                  editable={!isLoading}
                 />
               )}
             />
@@ -107,11 +107,13 @@ export default function SignInForm() {
           onPress={() => {
             // TODO
           }}
+          disabled={isLoading}
         />
 
         <ButtonStyled
           text={t("auth.log-in")}
-          disabled={!isValid && isDirty}
+          disabled={(!isValid && isDirty) || isLoading}
+          isLoading={isLoading}
           onPress={handleSubmit(onHandleSubmit)}
           className="pt-4"
         />
@@ -124,8 +126,12 @@ export default function SignInForm() {
             text={t("auth.sign-up")}
             type={"bold"}
             onPress={() => navigate("/(app)/sign-up")}
+            disabled={isLoading}
           />
         </View>
+
+        <Text>{user ? `User: ${user.name} - ${user.email}` : "-"}</Text>
+        <Text>{error ? `Error: ${error}` : "-"}</Text>
       </ScrollView>
     </ScreenAuthWrapper>
   );

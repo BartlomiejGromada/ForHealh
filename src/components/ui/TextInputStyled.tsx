@@ -3,14 +3,7 @@ import { LucideIcon } from "lucide-react-native";
 import React from "react";
 import { FieldError } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import {
-  KeyboardAvoidingView,
-  Platform,
-  Text,
-  TextInput,
-  TextInputProps,
-  View,
-} from "react-native";
+import { KeyboardAvoidingView, Platform, TextInput, TextInputProps, View } from "react-native";
 import TextStyled from "./TextStyled";
 
 type TextInputStyledProps = {
@@ -18,21 +11,15 @@ type TextInputStyledProps = {
   errors?: FieldError;
 } & TextInputProps;
 
-export default function TextInputStyled({
-  Icon,
-  errors,
-  ...rest
-}: TextInputStyledProps) {
+export default function TextInputStyled({ Icon, errors, ...rest }: TextInputStyledProps) {
   const { t } = useTranslation();
 
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : undefined}
-      className="w-full gap-2"
-    >
+      className="w-full gap-2">
       <View
-        className={`flex-row items-center border  ${errors ? "border-error-light dark:border-error-dark" : "border-gray-300"} rounded-md px-3 py-2 bg-white w-full  dark:bg-card-dark`}
-      >
+        className={`flex-row items-center border  ${errors ? "border-error-light dark:border-error-dark" : "border-gray-300"} rounded-md px-3 py-2 bg-white w-full  dark:bg-card-dark`}>
         <Icon color={COLORS.primary[500]} size={20} />
         <TextInput
           {...rest}

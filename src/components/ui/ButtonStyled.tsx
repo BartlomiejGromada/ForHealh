@@ -1,20 +1,17 @@
 import React from "react";
-import {
-  Text,
-  TouchableOpacity,
-  TouchableOpacityProps,
-  View,
-} from "react-native";
+import { ActivityIndicator, TouchableOpacity, TouchableOpacityProps, View } from "react-native";
 import TextStyled from "./TextStyled";
 
 type ButtonStyledProps = TouchableOpacityProps & {
   text: string;
+  isLoading?: boolean;
   type?: "primary" | "outlined";
 };
 
 export default function ButtonStyled({
   text,
   type = "primary",
+  isLoading,
   ...rest
 }: ButtonStyledProps) {
   const styles = {
@@ -25,13 +22,13 @@ export default function ButtonStyled({
   return (
     <TouchableOpacity activeOpacity={0.6} {...rest}>
       <View
-        className={`rounded-md flex justify-center items-center p-4 ${styles[type]}`}
-      >
+        className={`rounded-md flex flex-row justify-center items-center gap-2 p-4 ${styles[type]}  ${rest.disabled && "opacity-60"}`}>
         <TextStyled
-          className={`${type === "primary" ? "text-typography-white dark:text-black" : "text-primary-500"}`}
-        >
+          className={`${type === "primary" ? "text-typography-white dark:text-black" : "text-primary-500"}`}>
           {text}
         </TextStyled>
+
+        {isLoading && <ActivityIndicator color={"white"} />}
       </View>
     </TouchableOpacity>
   );
