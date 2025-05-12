@@ -1,4 +1,5 @@
-import { ResponseStatus, User } from "@/types/Firebase";
+import { useAppStore } from "@/store";
+import { ResponseStatus } from "@/types/Firebase";
 import { saveInSecureStore } from "@/utils/secure-store";
 import { useColorScheme } from "nativewind";
 import { useState } from "react";
@@ -10,22 +11,19 @@ export default function useSignIn() {
   const { t } = useTranslation();
   const { colorScheme } = useColorScheme();
 
+  const login = useAppStore(state => state.login);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | undefined>();
-  const [user, setUser] = useState<User | undefined>();
 
   const signIn = async (email: string, password: string) => {
     setIsLoading(true);
-    setError(undefined);
 
     try {
       const response = await signInRequest(email, password);
 
       if (response.status === ResponseStatus.SUCCESS) {
         saveInSecureStore("user", response.user);
-        setUser(response.user);
+        login(response.user);
       } else {
-        setError(response.error.code);
         Toast.show({
           type: "error",
           text1: t("common.error"),
@@ -38,7 +36,6 @@ export default function useSignIn() {
     } catch (e) {
       console.error(e);
 
-      setError("something-went-wrong");
       Toast.show({
         type: "error",
         text1: t("common.error"),
@@ -52,5 +49,5 @@ export default function useSignIn() {
     }
   };
 
-  return { user, signIn, isLoading, error };
+  return { signIn, isLoading };
 }

@@ -4,6 +4,7 @@ import TextInputStyled from "@/components/ui/TextInputStyled";
 import TextPressable from "@/components/ui/TextPressable";
 import TextStyled from "@/components/ui/TextStyled";
 import PasswordInput from "@/features/auth/components/PasswordInput";
+import { useAppStore } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "expo-router";
 import { MailIcon } from "lucide-react-native";
@@ -37,11 +38,13 @@ export default function SignInForm() {
     },
   });
 
-  const { user, signIn, isLoading, error } = useSignIn();
+  const { signIn, isLoading } = useSignIn();
 
   const onHandleSubmit = async (data: SignInFormType) => {
     await signIn(data.email, data.password);
   };
+
+  const user = useAppStore(s => s.user);
 
   return (
     <ScreenAuthWrapper className="justify-start items-start">
