@@ -1,5 +1,5 @@
 import { useColorScheme } from "nativewind";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 type Theme = "light" | "dark";
 
@@ -13,7 +13,14 @@ const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const { colorScheme, setColorScheme, toggleColorScheme } = useColorScheme();
-  const [themeApp, setThemeApp] = useState<Theme>(colorScheme ?? "light");
+  // const [themeApp, setThemeApp] = useState<Theme>(colorScheme ?? "light");
+
+  //TODO: Usunąć MOCK
+  const [themeApp, setThemeApp] = useState<Theme>("light");
+  useEffect(() => {
+    setColorScheme("light");
+  }, [setColorScheme]);
+  //------------
 
   const toggleTheme = () => {
     setThemeApp(prevTheme => (prevTheme === "light" ? "dark" : "light"));

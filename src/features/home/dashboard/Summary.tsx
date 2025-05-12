@@ -1,6 +1,6 @@
 import TextStyled from "@/components/ui/TextStyled";
 import { COLORS } from "@/constants/Colors";
-import { LucideIcon, SquareActivityIcon, HeartIcon } from "lucide-react-native";
+import { HeartIcon, LucideIcon, SquareActivityIcon } from "lucide-react-native";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { View } from "react-native";

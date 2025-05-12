@@ -6,12 +6,13 @@ import TextStyled from "@/components/ui/TextStyled";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "expo-router";
 import { MailIcon, UserIcon } from "lucide-react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { ScrollView, View } from "react-native";
 import { z } from "zod";
 import PasswordInput from "../components/PasswordInput";
+import useSignUp from "../hooks/useSignUp";
 
 type SignUpFormType = {
   name: string;
@@ -29,6 +30,7 @@ export default function SingUpForm() {
     control,
     handleSubmit,
     formState: { errors, isValid, isDirty },
+    reset,
   } = useForm<SignUpFormType>({
     resolver: zodResolver(schema),
     reValidateMode: "onChange",
@@ -40,20 +42,24 @@ export default function SingUpForm() {
     },
   });
 
-  const onHandleSubmit = (data: SignUpFormType) => {
-    //TODO: Send request to firebase auth
-    console.log(data);
+  const { signUp, isLoading, isSuccess } = useSignUp();
+
+  const onHandleSubmit = async (data: SignUpFormType) => {
+    await signUp(data.email, data.password, data.name);
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      reset();
+    }
+  }, [isSuccess, reset]);
 
   return (
     <ScreenAuthWrapper className="justify-start items-start">
       <ScrollView>
         <View className="gap-4">
           <View className="gap-2">
-            <TextStyled
-              type="bold"
-              className="text-3xl dark:color-typography-white"
-            >
+            <TextStyled type="bold" className="text-3xl dark:color-typography-white">
               {t("auth.registration")}
             </TextStyled>
             <TextStyled className="text-sm color-typography-400">
@@ -77,6 +83,7 @@ export default function SingUpForm() {
                   autoCapitalize="words"
                   placeholder={t("auth.firstname-and-lastname")}
                   Icon={UserIcon}
+                  editable={!isLoading}
                 />
               )}
             />
@@ -99,6 +106,7 @@ export default function SingUpForm() {
                   autoCapitalize="none"
                   placeholder={t("auth.email")}
                   Icon={MailIcon}
+                  editable={!isLoading}
                 />
               )}
             />
@@ -119,6 +127,7 @@ export default function SingUpForm() {
                   errors={errors.password}
                   autoCapitalize="none"
                   placeholder={t("auth.password")}
+                  editable={!isLoading}
                 />
               )}
             />
@@ -139,6 +148,7 @@ export default function SingUpForm() {
                   errors={errors.confirmPassword}
                   autoCapitalize="none"
                   placeholder={t("auth.confirm-password")}
+                  editable={!isLoading}
                 />
               )}
             />
@@ -147,8 +157,9 @@ export default function SingUpForm() {
 
         <ButtonStyled
           text={t("auth.sign-up")}
-          disabled={!isValid && isDirty}
+          disabled={(!isValid && isDirty) || isLoading}
           onPress={handleSubmit(onHandleSubmit)}
+          isLoading={isLoading}
           className="pt-12"
         />
 
@@ -160,6 +171,7 @@ export default function SingUpForm() {
             text={t("auth.log-in")}
             type="bold"
             onPress={() => navigate("/(app)/sign-in")}
+            disabled={isLoading}
           />
         </View>
       </ScrollView>

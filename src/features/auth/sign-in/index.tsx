@@ -4,14 +4,13 @@ import TextInputStyled from "@/components/ui/TextInputStyled";
 import TextPressable from "@/components/ui/TextPressable";
 import TextStyled from "@/components/ui/TextStyled";
 import PasswordInput from "@/features/auth/components/PasswordInput";
-import { useAppStore } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "expo-router";
 import { MailIcon } from "lucide-react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { ScrollView, Text, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { z } from "zod";
 import useSignIn from "../hooks/useSignIn";
 
@@ -38,13 +37,17 @@ export default function SignInForm() {
     },
   });
 
-  const { signIn, isLoading } = useSignIn();
+  const { signIn, isLoading, isSuccess } = useSignIn();
 
   const onHandleSubmit = async (data: SignInFormType) => {
     await signIn(data.email, data.password);
   };
 
-  const user = useAppStore(s => s.user);
+  useEffect(() => {
+    if (isSuccess) {
+      navigate("/(root)");
+    }
+  }, [isSuccess, navigate]);
 
   return (
     <ScreenAuthWrapper className="justify-start items-start">
@@ -132,8 +135,6 @@ export default function SignInForm() {
             disabled={isLoading}
           />
         </View>
-
-        <Text>{user ? `User: ${user.name} - ${user.email}` : "-"}</Text>
       </ScrollView>
     </ScreenAuthWrapper>
   );

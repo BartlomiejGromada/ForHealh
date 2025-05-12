@@ -21,6 +21,7 @@ export const toastConfig = {
           />
         </View>
       )}
+      text2NumberOfLines={3}
       contentContainerStyle={{ paddingHorizontal: 15 }}
       text1Style={{
         fontSize: 15,
@@ -49,6 +50,7 @@ export const toastConfig = {
           />
         </View>
       )}
+      text2NumberOfLines={3}
       contentContainerStyle={{ paddingHorizontal: 15 }}
       text1Style={{
         fontSize: 15,

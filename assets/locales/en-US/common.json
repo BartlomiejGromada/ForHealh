@@ -7,6 +7,7 @@
     "profile": "Profile"
   },
   "error": "Error",
+  "success": "Success",
   "errors": {
     "something-went-wrong": "Something went wrong..."
   }

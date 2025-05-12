@@ -1,4 +1,5 @@
 import { COLORS } from "@/constants/Colors";
+import { useDisableAndroidBack } from "@/hooks/useDisableAndroidBack";
 import { useAppTheme } from "@/providers/ThemeProvider";
 import { useAppStore } from "@/store";
 import { Redirect, Tabs } from "expo-router";
@@ -7,6 +8,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 export default function LoggedLayout() {
+  useDisableAndroidBack();
   const isLoggedIn = useAppStore(state => state.isLoggedIn);
 
   if (!isLoggedIn) {
@@ -25,6 +27,12 @@ const RootTabs = () => {
       screenOptions={{
         tabBarActiveTintColor: COLORS.primary[500],
         animation: "shift",
+        transitionSpec: {
+          animation: "spring",
+          config: {
+            speed: 50,
+          },
+        },
         headerShown: false,
         tabBarStyle: {
           backgroundColor: theme === "dark" ? COLORS.card.dark : COLORS.card.light,

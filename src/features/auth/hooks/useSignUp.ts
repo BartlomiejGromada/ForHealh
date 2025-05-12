@@ -1,31 +1,33 @@
-import { USER_KEY } from "@/constants/SecureStoreKeys";
 import { useAppTheme } from "@/providers/ThemeProvider";
-import { useAppStore } from "@/store";
 import { ResponseStatus } from "@/types/Firebase";
-import { saveInSecureStore } from "@/utils/secure-store";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import Toast from "react-native-toast-message";
-import { signInRequest } from "../api/auth-api";
+import { signUpRequest } from "../api/auth-api";
 
-export default function useSignIn() {
+export default function useSignUp() {
   const { t } = useTranslation();
   const { theme } = useAppTheme();
 
-  const login = useAppStore(state => state.login);
-  const [isSuccess, setIsSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
-  const signIn = async (email: string, password: string) => {
+  const signUp = async (email: string, password: string, displayName: string) => {
     setIsLoading(true);
     setIsSuccess(false);
 
     try {
-      const response = await signInRequest(email, password);
+      const response = await signUpRequest(email, password, displayName);
 
       if (response.status === ResponseStatus.SUCCESS) {
-        saveInSecureStore(USER_KEY, response.user);
-        login(response.user);
+        Toast.show({
+          type: "success",
+          text1: t("common.success"),
+          text2: `${t("auth.account-has-been-created", { email: response.user.email })}`,
+          props: {
+            theme,
+          },
+        });
         setIsSuccess(true);
       } else {
         Toast.show({
@@ -55,5 +57,5 @@ export default function useSignIn() {
     }
   };
 
-  return { signIn, isLoading, isSuccess };
+  return { signUp, isLoading, isSuccess };
 }

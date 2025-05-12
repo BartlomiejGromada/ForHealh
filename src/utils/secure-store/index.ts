@@ -12,6 +12,6 @@ export async function getFromSecureStore<T>(key: string) {
   return result as T;
 }
 
-export async function RemoveFromSecureStore(key: string) {
+export async function removeFromSecureStore(key: string) {
   await SecureStore.deleteItemAsync(key);
 }

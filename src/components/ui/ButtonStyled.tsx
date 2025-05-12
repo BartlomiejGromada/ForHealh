@@ -28,7 +28,7 @@ export default function ButtonStyled({
           {text}
         </TextStyled>
 
-        {isLoading && <ActivityIndicator color={"white"} />}
+        {isLoading && <ActivityIndicator className="color-white dark:color-black" />}
       </View>
     </TouchableOpacity>
   );
