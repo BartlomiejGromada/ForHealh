@@ -1,8 +1,8 @@
 import { COLORS } from "@/constants/Colors";
+import { useAppTheme } from "@/providers/ThemeProvider";
 import { useAppStore } from "@/store";
 import { Redirect, Tabs } from "expo-router";
 import { CalendarIcon, HouseIcon, PlusCircleIcon, UserIcon } from "lucide-react-native";
-import { useColorScheme } from "nativewind";
 import React from "react";
 import { useTranslation } from "react-i18next";
 
@@ -18,8 +18,7 @@ export default function LoggedLayout() {
 
 const RootTabs = () => {
   const { t } = useTranslation();
-
-  const { colorScheme } = useColorScheme();
+  const { theme } = useAppTheme();
 
   return (
     <Tabs
@@ -28,7 +27,7 @@ const RootTabs = () => {
         animation: "shift",
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: colorScheme === "dark" ? COLORS.card.dark : COLORS.card.light,
+          backgroundColor: theme === "dark" ? COLORS.card.dark : COLORS.card.light,
         },
         tabBarLabelStyle: {
           fontFamily: "Lato-Regular",

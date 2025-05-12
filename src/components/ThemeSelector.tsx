@@ -1,18 +1,18 @@
+import { useAppTheme } from "@/providers/ThemeProvider";
 import { BedIcon, SunIcon } from "lucide-react-native";
-import { useColorScheme } from "nativewind";
 import React from "react";
 import { Pressable, View } from "react-native";
 
 export default function ThemeSelector() {
-  const { setColorScheme } = useColorScheme();
+  const { setTheme } = useAppTheme();
 
   return (
     <View>
-      <Pressable onPress={() => setColorScheme("dark")}>
+      <Pressable onPress={() => setTheme("dark")}>
         <BedIcon stroke={"black"} />
       </Pressable>
 
-      <Pressable onPress={() => setColorScheme("light")}>
+      <Pressable onPress={() => setTheme("light")}>
         <SunIcon stroke={"black"} />
       </Pressable>
     </View>

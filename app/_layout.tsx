@@ -1,10 +1,10 @@
 import { useAuthSession } from "@/hooks/useAuthSession";
+import { ThemeProvider } from "@/providers/ThemeProvider";
 import "@/utils/language/i18nConfig"; // This line imports the i18n configuration
 import { toastConfig } from "@/utils/toast-message/toastConfig";
 import { useFonts } from "expo-font";
 import { Slot } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { useColorScheme } from "nativewind";
 import { useEffect } from "react";
 import "react-native-reanimated";
 import Toast from "react-native-toast-message";
@@ -15,7 +15,6 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   useAuthSession();
-  const { setColorScheme } = useColorScheme();
 
   const [loaded] = useFonts({
     "Lato-Regular": require("../assets/fonts/Lato-Regular.ttf"),
@@ -26,7 +25,6 @@ export default function RootLayout() {
 
   useEffect(() => {
     if (loaded) {
-      setColorScheme("light"); // Default light theme
       SplashScreen.hideAsync();
     }
   }, [loaded]);
@@ -36,9 +34,9 @@ export default function RootLayout() {
   }
 
   return (
-    <>
+    <ThemeProvider>
       <Slot />
       <Toast config={toastConfig} />
-    </>
+    </ThemeProvider>
   );
 }

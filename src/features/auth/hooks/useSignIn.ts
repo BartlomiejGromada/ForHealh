@@ -1,16 +1,16 @@
+import { USER_KEY } from "@/constants/SecureStoreKeys";
+import { useAppTheme } from "@/providers/ThemeProvider";
 import { useAppStore } from "@/store";
 import { ResponseStatus } from "@/types/Firebase";
 import { saveInSecureStore } from "@/utils/secure-store";
-import { useColorScheme } from "nativewind";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import Toast from "react-native-toast-message";
 import { signInRequest } from "../api/auth-api";
-import { USER_KEY } from "@/constants/SecureStoreKeys";
 
 export default function useSignIn() {
   const { t } = useTranslation();
-  const { colorScheme } = useColorScheme();
+  const { theme } = useAppTheme();
 
   const login = useAppStore(state => state.login);
   const [isLoading, setIsLoading] = useState(false);
@@ -30,7 +30,7 @@ export default function useSignIn() {
           text1: t("common.error"),
           text2: `${t(`firebase-errors.${response.error.code}`, { ns: "auth" })}`,
           props: {
-            theme: colorScheme,
+            theme,
           },
         });
       }
@@ -42,7 +42,7 @@ export default function useSignIn() {
         text1: t("common.error"),
         text2: `${t(`errors.something-went-wrong`, { ns: "common" })}`,
         props: {
-          theme: colorScheme,
+          theme,
         },
       });
     } finally {
