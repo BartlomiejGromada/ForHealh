@@ -1,5 +1,6 @@
-import { SessionProvider } from "@/providers/SessionProvider";
+import { useAuthSession } from "@/hooks/useAuthSession";
 import "@/utils/language/i18nConfig"; // This line imports the i18n configuration
+import { toastConfig } from "@/utils/toast-message/toastConfig";
 import { useFonts } from "expo-font";
 import { Slot } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
@@ -8,12 +9,12 @@ import { useEffect } from "react";
 import "react-native-reanimated";
 import Toast from "react-native-toast-message";
 import "../global.css";
-import { toastConfig } from "@/utils/toast-message/toastConfig";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+  useAuthSession();
   const { setColorScheme } = useColorScheme();
 
   const [loaded] = useFonts({
@@ -35,9 +36,9 @@ export default function RootLayout() {
   }
 
   return (
-    <SessionProvider>
+    <>
       <Slot />
       <Toast config={toastConfig} />
-    </SessionProvider>
+    </>
   );
 }

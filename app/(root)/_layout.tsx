@@ -1,20 +1,15 @@
 import { COLORS } from "@/constants/Colors";
-import { useSession } from "@/providers/SessionProvider";
+import { useAppStore } from "@/store";
 import { Redirect, Tabs } from "expo-router";
-import {
-  CalendarIcon,
-  HouseIcon,
-  UserIcon,
-  PlusCircleIcon,
-} from "lucide-react-native";
+import { CalendarIcon, HouseIcon, PlusCircleIcon, UserIcon } from "lucide-react-native";
 import { useColorScheme } from "nativewind";
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-export default function _layout() {
-  const { session } = useSession();
+export default function LoggedLayout() {
+  const isLoggedIn = useAppStore(state => state.isLoggedIn);
 
-  if (!session) {
+  if (!isLoggedIn) {
     return <Redirect href={"/(app)/auth-welcome"} />;
   }
 
@@ -33,14 +28,12 @@ const RootTabs = () => {
         animation: "shift",
         headerShown: false,
         tabBarStyle: {
-          backgroundColor:
-            colorScheme === "dark" ? COLORS.card.dark : COLORS.card.light,
+          backgroundColor: colorScheme === "dark" ? COLORS.card.dark : COLORS.card.light,
         },
         tabBarLabelStyle: {
           fontFamily: "Lato-Regular",
         },
-      }}
-    >
+      }}>
       <Tabs.Screen
         name="index"
         options={{

@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import Toast from "react-native-toast-message";
 import { signInRequest } from "../api/auth-api";
+import { USER_KEY } from "@/constants/SecureStoreKeys";
 
 export default function useSignIn() {
   const { t } = useTranslation();
@@ -21,7 +22,7 @@ export default function useSignIn() {
       const response = await signInRequest(email, password);
 
       if (response.status === ResponseStatus.SUCCESS) {
-        saveInSecureStore("user", response.user);
+        saveInSecureStore(USER_KEY, response.user);
         login(response.user);
       } else {
         Toast.show({
