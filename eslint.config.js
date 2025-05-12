@@ -11,6 +11,7 @@ module.exports = defineConfig([
       "react-native/no-inline-styles": 0,
       "import/namespace": 0,
       "no-duplicate-imports": "warn",
+      "@typescript-eslint/no-unused-vars": "warn",
     },
   },
 ]);

@@ -3,7 +3,11 @@
   "tab": {
     "home": "Home",
     "add": "Add",
-    "calendar": "Kalendarz",
-    "profile": "Profil"
+    "calendar": "Calendar",
+    "profile": "Profile"
+  },
+  "error": "Error",
+  "errors": {
+    "something-went-wrong": "Something went wrong..."
   }
 }

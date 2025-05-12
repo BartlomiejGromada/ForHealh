@@ -64,4 +64,8 @@ export const COLORS = {
     light: "#FFFFFF",
     dark: "#1F1F1F",
   },
+  error: {
+    light: "#ef4444",
+    dark: "#f87171",
+  },
 };

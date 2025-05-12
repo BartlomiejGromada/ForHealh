@@ -1,10 +1,11 @@
-import { FirebaseError, FirebaseReponse, User } from "@/types/Firebase";
+import { FIREBASE_UNKNOWN_ERROR_CODE, FIREBASE_UNKNOWN_ERROR_MESSAGE } from "@/constants/Firebase";
+import { FirebaseError, FirebaseReponse, ResponseStatus, User } from "@/types/Firebase";
 import { auth } from "@/utils/firebase/firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 type SignInRepsonse =
-  | (FirebaseReponse & { status: "SUCCESS"; user: User })
-  | (FirebaseReponse & { status: "ERROR"; error: FirebaseError });
+  | (FirebaseReponse & { status: ResponseStatus.SUCCESS; user: User })
+  | (FirebaseReponse & { status: ResponseStatus.ERROR; error: FirebaseError });
 
 export async function signInRequest(email: string, password: string): Promise<SignInRepsonse> {
   return signInWithEmailAndPassword(auth, email, password)
@@ -12,7 +13,7 @@ export async function signInRequest(email: string, password: string): Promise<Si
       const user = userCredential.user;
 
       const reponse: SignInRepsonse = {
-        status: "SUCCESS",
+        status: ResponseStatus.SUCCESS,
         user: {
           uid: user.uid,
           name: user.displayName ?? "-",
@@ -23,14 +24,14 @@ export async function signInRequest(email: string, password: string): Promise<Si
       return reponse;
     })
     .catch(error => {
-      const reponse: SignInRepsonse = {
-        status: "ERROR",
+      const reponseError: SignInRepsonse = {
+        status: ResponseStatus.ERROR,
         error: {
-          code: (error.code as string) ?? "unknown-code",
-          message: (error.message as string) ?? "unexpected-error",
+          code: (error.code as string) ?? FIREBASE_UNKNOWN_ERROR_CODE,
+          message: (error.message as string) ?? FIREBASE_UNKNOWN_ERROR_MESSAGE,
         },
       };
 
-      return reponse;
+      return reponseError;
     });
 }

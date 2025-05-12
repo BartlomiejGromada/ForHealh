@@ -131,7 +131,6 @@ export default function SignInForm() {
         </View>
 
         <Text>{user ? `User: ${user.name} - ${user.email}` : "-"}</Text>
-        <Text>{error ? `Error: ${error}` : "-"}</Text>
       </ScrollView>
     </ScreenAuthWrapper>
   );

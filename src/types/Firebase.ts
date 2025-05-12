@@ -1,5 +1,10 @@
+export enum ResponseStatus {
+  SUCCESS,
+  ERROR,
+}
+
 export type FirebaseReponse = {
-  status: "SUCCESS" | "ERROR";
+  status: ResponseStatus;
 };
 
 export type FirebaseError = { code: string; message: string };
