@@ -1,20 +1,17 @@
 import { COLORS } from "@/constants/Colors";
-import { useSession } from "@/providers/SessionProvider";
+import { useDisableAndroidBack } from "@/hooks/useDisableAndroidBack";
+import { useAppTheme } from "@/providers/ThemeProvider";
+import { useAppStore } from "@/store";
 import { Redirect, Tabs } from "expo-router";
-import {
-  CalendarIcon,
-  HouseIcon,
-  UserIcon,
-  PlusCircleIcon,
-} from "lucide-react-native";
-import { useColorScheme } from "nativewind";
+import { CalendarIcon, HouseIcon, PlusCircleIcon, UserIcon } from "lucide-react-native";
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-export default function _layout() {
-  const { session } = useSession();
+export default function LoggedLayout() {
+  useDisableAndroidBack();
+  const isLoggedIn = useAppStore(state => state.isLoggedIn);
 
-  if (!session) {
+  if (!isLoggedIn) {
     return <Redirect href={"/(app)/auth-welcome"} />;
   }
 
@@ -23,24 +20,27 @@ export default function _layout() {
 
 const RootTabs = () => {
   const { t } = useTranslation();
-
-  const { colorScheme } = useColorScheme();
+  const { theme } = useAppTheme();
 
   return (
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: COLORS.primary[500],
         animation: "shift",
+        transitionSpec: {
+          animation: "spring",
+          config: {
+            speed: 50,
+          },
+        },
         headerShown: false,
         tabBarStyle: {
-          backgroundColor:
-            colorScheme === "dark" ? COLORS.card.dark : COLORS.card.light,
+          backgroundColor: theme === "dark" ? COLORS.card.dark : COLORS.card.light,
         },
         tabBarLabelStyle: {
           fontFamily: "Lato-Regular",
         },
-      }}
-    >
+      }}>
       <Tabs.Screen
         name="index"
         options={{

@@ -3,7 +3,7 @@ import ButtonStyled from "@/components/ui/ButtonStyled";
 import TextStyled from "@/components/ui/TextStyled";
 import { COLORS } from "@/constants/Colors";
 import { useRouter } from "expo-router";
-import { ActivityIcon, HeartIcon } from "lucide-react-native";
+import { HeartIcon } from "lucide-react-native";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { View } from "react-native";

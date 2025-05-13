@@ -1,5 +1,10 @@
-
-/.expo
-
-node_modules
-assets
+node_modules/**
+package.json
+yarn.lock
+ios/**
+android/**
+assets/**
+.vscode
+.expo-shared
+.prettirrc
+.eslint.config.js

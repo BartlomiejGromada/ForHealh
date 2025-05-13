@@ -5,5 +5,10 @@
     "add": "Dodaj",
     "calendar": "Kalendarz",
     "profile": "Profil"
+  },
+  "error": "Błąd",
+  "success": "Sukces",
+  "errors": {
+    "something-went-wrong": "Coś poszło nie tak..."
   }
 }
