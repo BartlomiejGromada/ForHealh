@@ -1,5 +1,4 @@
 import { COLORS } from "@/constants/Colors";
-import { useDisableAndroidBack } from "@/hooks/useDisableAndroidBack";
 import { useAppTheme } from "@/providers/ThemeProvider";
 import { useAppStore } from "@/store";
 import { Redirect, Tabs } from "expo-router";
@@ -8,7 +7,6 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 export default function LoggedLayout() {
-  useDisableAndroidBack();
   const isLoggedIn = useAppStore(state => state.isLoggedIn);
 
   if (!isLoggedIn) {
