@@ -108,7 +108,7 @@ const ActionsContainer = ({
 
   return (
     <View className="gap-2">
-      <View className="flex items-end gap-2 pt-4">
+      <View className="flex items-end">
         <TextPressable
           text={t("auth.log-in")}
           onPress={() => navigate("/(app)/sign-in")}

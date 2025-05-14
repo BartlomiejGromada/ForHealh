@@ -8,5 +8,5 @@ export default function AuthLayout() {
     return <Redirect href={"/(root)"} />;
   }
 
-  return <Slot />;
+  return <Slot initialRouteName="auth-welcome" />;
 }
