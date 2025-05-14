@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 import { ScrollView, View } from "react-native";
 import { z } from "zod";
 import PasswordInput from "../components/PasswordInput";
-import useSignUp from "../hooks/useSignUp";
+import useSignUp from "./useSignUp";
 
 type SignUpFormType = {
   name: string;

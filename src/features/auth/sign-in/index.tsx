@@ -12,7 +12,7 @@ import { Control, Controller, FieldErrors, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { ScrollView, View } from "react-native";
 import { z } from "zod";
-import useSignIn from "../hooks/useSignIn";
+import useSignIn from "./useSignIn";
 
 type SignInFormType = {
   email: string;
@@ -145,7 +145,7 @@ const ActionsContainer = ({
         text={t("auth.forgot-password")}
         classNameText={"text-right text-primary-500 font-light text-sm"}
         onPress={() => {
-          // TODO
+          navigate("/(app)/reset-password");
         }}
         disabled={isLoading}
       />
