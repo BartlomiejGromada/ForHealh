@@ -10,5 +10,14 @@
   "success": "Success",
   "errors": {
     "something-went-wrong": "Something went wrong..."
+  },
+  "doctor-types": {
+    "pediatrician": "Pediatrician",
+    "cardiologist": "Cardiologist",
+    "dermatologist": "Dermatologist",
+    "family-doctor": "Family Doctor",
+    "physiotherapist": "Physiotherapist",
+    "neurologist": "Neurologist",
+    "orthopaedist": "Orthopaedist"
   }
 }
