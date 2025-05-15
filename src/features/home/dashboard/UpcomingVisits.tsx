@@ -2,14 +2,15 @@ import TextStyled from "@/components/ui/TextStyled";
 import { COLORS } from "@/constants/Colors";
 import { formatDateTime } from "@/helpers/dates";
 import { doctorTypeTranslationKeys } from "@/helpers/enums";
-import { AxeIcon, ClockIcon, HandIcon, StethoscopeIcon } from "lucide-react-native";
+import { DoctorProfession } from "@/types/Visit";
+import { ClockIcon, HandIcon, StethoscopeIcon } from "lucide-react-native";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { ActivityIndicator, View } from "react-native";
 import { ContainerCard } from "../components/ContainerCard";
 import ContainerSection from "../components/ContainerSection";
 import useUpcomingVisits from "../hooks/useUpcomingVisits";
-import { DoctorProfession } from "@/types/Visit";
+import { router } from "expo-router";
 
 export default function UpcomingVisits() {
   const { t } = useTranslation();
@@ -18,10 +19,14 @@ export default function UpcomingVisits() {
   const { visits, isLoading } = useUpcomingVisits({ count: UPCOMING_VISITS_COUNT });
 
   return (
-    <ContainerSection title={t("home.upcoming-visits")} onPressAction={() => {}}>
+    <ContainerSection
+      title={t("home.upcoming-visits")}
+      onPressAction={() => {
+        router.navigate("/standalone/visits-list");
+      }}>
       <View className="flex gap-y-4">
         {isLoading ? (
-          <ActivityIndicator className="color-primary-300" size={"large"} />
+          <ActivityIndicator size={"large"} className="color-primary-300" />
         ) : (
           visits.map(visit => (
             <ContainerCard
@@ -40,6 +45,14 @@ export default function UpcomingVisits() {
                     {formatDateTime(visit.date)}
                   </TextStyled>
                 </View>
+              }
+              onPress={() =>
+                router.push({
+                  pathname: "/standalone/visit-details",
+                  params: {
+                    id: visit.id,
+                  },
+                })
               }
             />
           ))

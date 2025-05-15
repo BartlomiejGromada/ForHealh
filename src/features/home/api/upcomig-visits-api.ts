@@ -1,16 +1,8 @@
 import { FIREBASE_UNKNOWN_ERROR_CODE, FIREBASE_UNKNOWN_ERROR_MESSAGE } from "@/constants/Firebase";
 import { FirebaseReponse, ResponseStatus } from "@/types/Firebase";
 import { Visit } from "@/types/Visit";
-import { collections } from "@/utils/firebase/collections";
-import {
-  getDocs,
-  limit,
-  orderBy,
-  query,
-  QueryConstraint,
-  Timestamp,
-  where,
-} from "firebase/firestore";
+import { getCountFromServer, getDocs, limit, query, QueryConstraint } from "firebase/firestore";
+import { upcomingVisitsQuery } from "../../../utils/firebase/queries";
 
 type getUpcomingVisitsRequestType = {
   userId: string;
@@ -21,24 +13,14 @@ export async function getUpcomingVisitsRequest({
   userId,
   count,
 }: getUpcomingVisitsRequestType): Promise<FirebaseReponse<Visit[]>> {
-  const now = new Date();
-  const startOfToday = new Date(
-    now.getFullYear(),
-    now.getMonth(),
-    now.getDate(),
-    now.getHours(),
-    now.getMinutes(),
-    0
-  );
-  const queryConstraints: QueryConstraint[] = [
-    where("date", ">=", Timestamp.fromDate(startOfToday)),
-    orderBy("date"),
-  ];
+  const queryBase = upcomingVisitsQuery(userId);
+
+  let queryConstraints: QueryConstraint[] = [];
   if (count) {
     queryConstraints.push(limit(count));
   }
 
-  const queryBuilder = query(collections.visitsByUserId(userId), ...queryConstraints);
+  const queryBuilder = query(queryBase, ...queryConstraints);
 
   try {
     const snapshot = await getDocs(queryBuilder);
@@ -62,6 +44,35 @@ export async function getUpcomingVisitsRequest({
     };
   } catch (error: any) {
     const reponseError: FirebaseReponse<Visit[]> = {
+      status: ResponseStatus.ERROR,
+      error: {
+        code: (error.code as string) ?? FIREBASE_UNKNOWN_ERROR_CODE,
+        message: (error.message as string) ?? FIREBASE_UNKNOWN_ERROR_MESSAGE,
+      },
+    };
+
+    return reponseError;
+  }
+}
+
+type getUpcomingVisitsCountRequestType = {
+  userId: string;
+};
+
+export async function getUpcomingVisitsCountRequest({
+  userId,
+}: getUpcomingVisitsCountRequestType): Promise<FirebaseReponse<number>> {
+  const queryBase = upcomingVisitsQuery(userId);
+
+  try {
+    const snapshot = await getCountFromServer(queryBase);
+
+    return {
+      status: ResponseStatus.SUCCESS,
+      payload: snapshot.data().count,
+    };
+  } catch (error: any) {
+    const reponseError: FirebaseReponse<number> = {
       status: ResponseStatus.ERROR,
       error: {
         code: (error.code as string) ?? FIREBASE_UNKNOWN_ERROR_CODE,
