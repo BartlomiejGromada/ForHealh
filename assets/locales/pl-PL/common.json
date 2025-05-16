@@ -19,5 +19,8 @@
     "physiotherapist": "Fizjoterapeuta ",
     "neurologist": "Neurolog",
     "orthopaedist ": "Ortopeda"
+  },
+  "firebase-errors": {
+    "invalid-argument": "Niepoprawny argument"
   }
 }

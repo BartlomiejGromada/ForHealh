@@ -12,3 +12,7 @@ export type VisitFirestore = {
   location: string;
   comment: string;
 };
+
+export type ExerciseFirestore = {
+  name: string;
+};

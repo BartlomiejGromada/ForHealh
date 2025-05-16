@@ -1,8 +1,8 @@
 import { FIREBASE_UNKNOWN_ERROR_CODE, FIREBASE_UNKNOWN_ERROR_MESSAGE } from "@/constants/Firebase";
+import { upcomingVisitsQuery } from "@/firebase/firestore/queries";
 import { FirebaseReponse, ResponseStatus } from "@/types/Firebase";
 import { Visit } from "@/types/Visit";
-import { getCountFromServer, getDocs, limit, query, QueryConstraint } from "firebase/firestore";
-import { upcomingVisitsQuery } from "../../../utils/firebase/queries";
+import { getCountFromServer, getDocs } from "firebase/firestore";
 
 type getUpcomingVisitsRequestType = {
   userId: string;
@@ -13,17 +13,10 @@ export async function getUpcomingVisitsRequest({
   userId,
   count,
 }: getUpcomingVisitsRequestType): Promise<FirebaseReponse<Visit[]>> {
-  const queryBase = upcomingVisitsQuery(userId);
-
-  let queryConstraints: QueryConstraint[] = [];
-  if (count) {
-    queryConstraints.push(limit(count));
-  }
-
-  const queryBuilder = query(queryBase, ...queryConstraints);
+  const query = upcomingVisitsQuery(userId, count);
 
   try {
-    const snapshot = await getDocs(queryBuilder);
+    const snapshot = await getDocs(query);
 
     const visits: Visit[] = snapshot.docs.map(doc => ({
       id: doc.id,
@@ -62,10 +55,10 @@ type getUpcomingVisitsCountRequestType = {
 export async function getUpcomingVisitsCountRequest({
   userId,
 }: getUpcomingVisitsCountRequestType): Promise<FirebaseReponse<number>> {
-  const queryBase = upcomingVisitsQuery(userId);
+  const query = upcomingVisitsQuery(userId);
 
   try {
-    const snapshot = await getCountFromServer(queryBase);
+    const snapshot = await getCountFromServer(query);
 
     return {
       status: ResponseStatus.SUCCESS,

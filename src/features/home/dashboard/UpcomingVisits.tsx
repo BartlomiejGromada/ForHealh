@@ -3,6 +3,7 @@ import { COLORS } from "@/constants/Colors";
 import { formatDateTime } from "@/helpers/dates";
 import { doctorTypeTranslationKeys } from "@/helpers/enums";
 import { DoctorProfession } from "@/types/Visit";
+import { router } from "expo-router";
 import { ClockIcon, HandIcon, StethoscopeIcon } from "lucide-react-native";
 import React from "react";
 import { useTranslation } from "react-i18next";
@@ -10,7 +11,6 @@ import { ActivityIndicator, View } from "react-native";
 import { ContainerCard } from "../components/ContainerCard";
 import ContainerSection from "../components/ContainerSection";
 import useUpcomingVisits from "../hooks/useUpcomingVisits";
-import { router } from "expo-router";
 
 export default function UpcomingVisits() {
   const { t } = useTranslation();

@@ -2,7 +2,7 @@ import { useFetch } from "@/hooks/useFetch";
 import { useUserId } from "@/hooks/useUserId";
 import { Visit } from "@/types/Visit";
 import { useCallback, useEffect, useState } from "react";
-import { getUpcomingVisitsRequest } from "../api/upcomig-visits-api";
+import { getUpcomingVisitsRequest } from "../api/upcomigVisitsApi";
 
 type useUpcomingVisitsProps = {
   count?: number;

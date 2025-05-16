@@ -44,7 +44,7 @@ export default function LastExercises() {
   return (
     <ContainerSection title={t("home.last-exercises")} onPressAction={() => {}}>
       <View className="w-full flex gap-y-4">
-        {exercisesMock.map((excercise) => (
+        {exercisesMock.map(excercise => (
           <ContainerCard
             key={excercise.id}
             Icon={SquareActivityIcon}
@@ -59,6 +59,7 @@ export default function LastExercises() {
                 </TextStyled>
               </View>
             }
+            onPress={() => {}}
           />
         ))}
       </View>

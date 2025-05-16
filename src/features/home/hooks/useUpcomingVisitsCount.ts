@@ -1,7 +1,7 @@
 import { useFetch } from "@/hooks/useFetch";
 import { useUserId } from "@/hooks/useUserId";
 import { useCallback, useEffect, useState } from "react";
-import { getUpcomingVisitsCountRequest } from "../api/upcomig-visits-api";
+import { getUpcomingVisitsCountRequest } from "../api/upcomigVisitsApi";
 
 export default function useUpcomingVisitsCount() {
   const userId = useUserId();

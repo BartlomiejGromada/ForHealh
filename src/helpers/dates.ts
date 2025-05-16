@@ -8,3 +8,15 @@ export const formatDateTime = (date: Date) => {
 
   return `${day}-${month}-${year} ${hours}:${minutes}`;
 };
+
+export const todayDateTime = () => {
+  const now = new Date();
+  return new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate(),
+    now.getHours(),
+    now.getMinutes(),
+    0
+  );
+};

@@ -19,5 +19,8 @@
     "physiotherapist": "Physiotherapist",
     "neurologist": "Neurologist",
     "orthopaedist": "Orthopaedist"
+  },
+  "firebase-errors": {
+    "invalid-argument": "Invalid argument"
   }
 }
