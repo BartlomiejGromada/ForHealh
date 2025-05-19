@@ -41,7 +41,7 @@ export default function UpcomingVisits() {
               description={
                 <View className="flex flex-row items-center gap-x-1">
                   <ClockIcon size={14} color={COLORS.typography[400]} />
-                  <TextStyled className="text-sm color-typography-400">
+                  <TextStyled className="text-sm color-typography-500">
                     {formatDateTime(visit.date)}
                   </TextStyled>
                 </View>

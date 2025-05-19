@@ -8,7 +8,6 @@ export type VisitFirestore = {
   };
   date: Timestamp;
   createdAt: Timestamp;
-  isOnline: boolean;
   location: string;
   comment: string;
 };

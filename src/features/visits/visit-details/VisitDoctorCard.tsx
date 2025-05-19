@@ -25,7 +25,7 @@ export default function VisitDoctorCard({ doctorName, doctorProfession }: VisitD
         )}
       </View>
       <View>
-        <TextStyled type="bold" className="text-xl">
+        <TextStyled type="bold" className="text-xl dark:text-typography-white">
           {doctorName}
         </TextStyled>
         <TextStyled className="color-typography-500">

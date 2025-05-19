@@ -31,7 +31,6 @@ export async function visitByIdRequest({
       },
       date: doc.data()!.date.toDate(),
       createdAt: doc.data()!.createdAt.toDate(),
-      isOnline: doc.data()!.isOnline,
       location: doc.data()!.location,
       comment: doc.data()!.comment,
     };

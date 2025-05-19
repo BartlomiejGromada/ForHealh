@@ -77,7 +77,7 @@ const FormContainer = ({
         <TextStyled type="bold" className="text-3xl dark:color-typography-white">
           {t("auth.login")}
         </TextStyled>
-        <TextStyled className="text-sm color-typography-400">
+        <TextStyled className="text-sm color-typography-500">
           {`${t("auth.welcome-back")}! ${t("auth.log-in-to-your-account")}`}
         </TextStyled>
       </View>

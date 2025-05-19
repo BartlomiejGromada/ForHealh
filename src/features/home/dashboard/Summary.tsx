@@ -49,7 +49,7 @@ function SummarySquare({ Icon, count, text, isLoading }: SummarySquareProps) {
           <TextStyled type="bold" className="text-2xl dark:text-typography-white">
             {count}
           </TextStyled>
-          <TextStyled className="text-xs color-typography-400">{text}</TextStyled>
+          <TextStyled className="text-xs color-typography-500">{text}</TextStyled>
         </Fragment>
       )}
     </View>

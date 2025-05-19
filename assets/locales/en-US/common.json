@@ -22,5 +22,6 @@
   },
   "firebase-errors": {
     "invalid-argument": "Invalid argument"
-  }
+  },
+  "edit": "Edit"
 }

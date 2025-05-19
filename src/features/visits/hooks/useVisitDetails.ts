@@ -2,7 +2,7 @@ import { useFetch } from "@/hooks/useFetch";
 import { useUserId } from "@/hooks/useUserId";
 import { Visit } from "@/types/Visit";
 import { useCallback, useEffect, useState } from "react";
-import { visitByIdRequest } from "../api/vistiByIdApi";
+import { visitByIdRequest } from "../api/vistiByIdRequest";
 
 type useVisitDetailsProps = {
   visitId: string;

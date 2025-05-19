@@ -16,7 +16,6 @@ export type Visit = {
   };
   date: Date;
   createdAt: Date;
-  isOnline: boolean;
   location: string;
   comment: string;
 };

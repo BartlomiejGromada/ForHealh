@@ -1,22 +1,25 @@
 import React from "react";
 import { ActivityIndicator, TouchableOpacity, TouchableOpacityProps, View } from "react-native";
 import TextStyled from "./TextStyled";
+import { LucideIcon } from "lucide-react-native";
 
 type ButtonStyledProps = TouchableOpacityProps & {
   text: string;
   isLoading?: boolean;
   type?: "primary" | "outlined";
+  Icon?: LucideIcon;
 };
 
 export default function ButtonStyled({
   text,
   type = "primary",
   isLoading,
+  Icon,
   ...rest
 }: ButtonStyledProps) {
   const styles = {
     primary: "bg-primary-500",
-    outlined: "border border-primary-500 bg-card-light dark:bg-card-dark ",
+    outlined: "border border-primary-500 bg-card-light dark:bg-card-dark",
   };
 
   return (

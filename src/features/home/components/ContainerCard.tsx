@@ -22,7 +22,7 @@ export function ContainerCard({ Icon, title, subtitle, description, onPress }: C
           <TextStyled type="bold" className="text-md dark:text-typography-white">
             {title}
           </TextStyled>
-          <TextStyled className="text-sm color-typography-400">{subtitle}</TextStyled>
+          <TextStyled className="text-sm color-typography-500">{subtitle}</TextStyled>
           {description}
         </View>
       </View>

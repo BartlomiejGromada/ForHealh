@@ -52,9 +52,9 @@ export default function LastExercises() {
             subtitle={excercise.date.toLocaleDateString()}
             description={
               <View className="w-[80%] flex flex-row justify-between">
-                <TextStyled className="text-sm color-typography-400">{`${excercise.durationInMin} min`}</TextStyled>
+                <TextStyled className="text-sm color-typography-500">{`${excercise.durationInMin} min`}</TextStyled>
 
-                <TextStyled className="text-sm color-typography-400">
+                <TextStyled className="text-sm color-typography-500">
                   {`${t("home.intensity")}: ${excercise.intensity}`}
                 </TextStyled>
               </View>
