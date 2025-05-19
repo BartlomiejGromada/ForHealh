@@ -20,3 +20,9 @@ export const exercisesQuery = (userId: string) => {
 
   return query(collections.visitsByUserId(userId), ...queryConstraints);
 };
+
+export const visitsByUserIdQuery = (userId: string) => {
+  const queryConstraints: QueryConstraint[] = [orderBy("date")];
+
+  return query(collections.visitsByUserId(userId), ...queryConstraints);
+};
