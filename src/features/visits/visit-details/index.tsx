@@ -1,14 +1,13 @@
+import ScreenHeader from "@/components/ScreenHeader";
 import ScreenWrapper from "@/components/ScreenWrapper";
+import StandaloneScreenWrapper from "@/components/StandaloneScreenWrapper";
 import { DoctorProfession, Visit } from "@/types/Visit";
-import { Stack } from "expo-router";
 import React, { Fragment } from "react";
 import { useTranslation } from "react-i18next";
-import { ActivityIndicator, Text, View } from "react-native";
+import { View } from "react-native";
+import VisistOptionsCard from "./VisistOptionsCard";
 import VisitDoctorCard from "./VisitDoctorCard";
 import VisitInformationsCard from "./VisitInformationsCard";
-import VisistOptionsCard from "./VisistOptionsCard";
-import { useAppTheme } from "@/providers/ThemeProvider";
-import { COLORS } from "@/constants/Colors";
 
 type VisitDetailsProps = {
   visitId: string;
@@ -16,8 +15,6 @@ type VisitDetailsProps = {
 
 export default function VisitDetails({ visitId }: VisitDetailsProps) {
   const { t } = useTranslation();
-
-  const { theme } = useAppTheme();
 
   // const { visit, isLoading } = useVisitDetails({ visitId });
 
@@ -35,22 +32,10 @@ export default function VisitDetails({ visitId }: VisitDetailsProps) {
 
   return (
     <Fragment>
-      <Stack.Screen
-        options={{
-          title: t("visits.details-of-visit"),
-          headerTitleStyle: {
-            color: theme === "dark" ? COLORS.white : COLORS.black,
-          },
-          headerTintColor: theme === "dark" ? COLORS.white : COLORS.black,
-          headerStyle: {
-            backgroundColor: theme === "dark" ? COLORS.card.dark : COLORS.card.light,
-          },
-        }}
-      />
+      <ScreenHeader title={t("visits.details-of-visit")} />
+
       <ScreenWrapper>
-        {false ? (
-          <ActivityIndicator size={"large"} />
-        ) : visit ? (
+        <StandaloneScreenWrapper isLoading={false} isError={false}>
           <View className="flex gap-6">
             <VisitDoctorCard
               doctorName={visit.doctor.name}
@@ -65,11 +50,7 @@ export default function VisitDetails({ visitId }: VisitDetailsProps) {
 
             <VisistOptionsCard visitId={visitId} />
           </View>
-        ) : (
-          <View>
-            <Text>{"Coś poszło nie tak..."}</Text>
-          </View>
-        )}
+        </StandaloneScreenWrapper>
       </ScreenWrapper>
     </Fragment>
   );

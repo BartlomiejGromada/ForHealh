@@ -1,13 +1,16 @@
+import { LucideIcon } from "lucide-react-native";
 import React from "react";
 import { ActivityIndicator, TouchableOpacity, TouchableOpacityProps, View } from "react-native";
 import TextStyled from "./TextStyled";
-import { LucideIcon } from "lucide-react-native";
 
 type ButtonStyledProps = TouchableOpacityProps & {
   text: string;
   isLoading?: boolean;
   type?: "primary" | "outlined";
-  Icon?: LucideIcon;
+  Icon?: {
+    name: LucideIcon;
+    color: string;
+  };
 };
 
 export default function ButtonStyled({
@@ -32,6 +35,8 @@ export default function ButtonStyled({
         </TextStyled>
 
         {isLoading && <ActivityIndicator className="color-white dark:color-black" />}
+
+        {Icon && <Icon.name color={Icon.color} />}
       </View>
     </TouchableOpacity>
   );

@@ -2,9 +2,9 @@ import TextStyled from "@/components/ui/TextStyled";
 import { COLORS } from "@/constants/Colors";
 import { LucideIcon } from "lucide-react-native";
 import React from "react";
-import { ActivityIndicator, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, TouchableOpacity, TouchableOpacityProps, View } from "react-native";
 
-type ActionButtonProps = {
+type ActionButtonProps = TouchableOpacityProps & {
   text: string;
   action: "cancel" | "edit" | "remove";
   isLoading?: boolean;
@@ -18,9 +18,10 @@ export default function ActionButton({
   isLoading,
   disabled,
   Icon,
+  ...rest
 }: ActionButtonProps) {
   return (
-    <TouchableOpacity activeOpacity={0.6}>
+    <TouchableOpacity activeOpacity={0.6} {...rest}>
       <View
         className={`flex flex-row justify-between items-center gap-2 p-4 border border-primary-500 rounded-md bg-card-light dark:bg-card-dark ${disabled && "opacity-60"}`}>
         <TextStyled className={"text-typography-dark dark:text-typography-white pl-3"}>
