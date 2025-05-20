@@ -20,6 +20,7 @@ export async function getUpcomingVisitsRequest({
 
     const visits: Visit[] = snapshot.docs.map(doc => ({
       id: doc.id,
+      status: doc.data().status,
       doctor: {
         name: doc.data().doctor.name,
         profession: doc.data().doctor.profession,

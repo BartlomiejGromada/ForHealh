@@ -1,10 +1,10 @@
+import ConfirmationModal from "@/components/ui/ConfirmationModal";
 import TextStyled from "@/components/ui/TextStyled";
 import { EditIcon, Trash2Icon, XIcon } from "lucide-react-native";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Alert, Modal, View } from "react-native";
+import { View } from "react-native";
 import ActionButton from "../components/ActionButton";
-import ButtonStyled from "@/components/ui/ButtonStyled";
 
 type VisistOptionsCardProps = {
   visitId: string;
@@ -13,6 +13,16 @@ type VisistOptionsCardProps = {
 export default function VisistOptionsCard({ visitId }: VisistOptionsCardProps) {
   const { t } = useTranslation();
   const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const onCancelVisitHandle = useCallback(() => {
+    // TODO
+    setIsModalVisible(true);
+  }, []);
+
+  const onRemoveVisitHandle = useCallback(() => {
+    // TODO
+    setIsModalVisible(true);
+  }, []);
 
   return (
     <View className="flex justify-center bg-card-light dark:bg-card-dark p-4 rounded-lg gap-4">
@@ -25,15 +35,26 @@ export default function VisistOptionsCard({ visitId }: VisistOptionsCardProps) {
         Icon={EditIcon}
         action="edit"
         onPress={() => {
-          setIsModalVisible(true);
+          // TODO
         }}
       />
-      <ActionButton text={t("visits.cancel-visit")} Icon={XIcon} action="cancel" />
-      <ActionButton text={t("visits.remove-visit")} Icon={Trash2Icon} action="remove" />
+      <ActionButton
+        text={t("visits.cancel-visit")}
+        Icon={XIcon}
+        action="cancel"
+        onPress={onCancelVisitHandle}
+      />
+      <ActionButton
+        text={t("visits.remove-visit")}
+        Icon={Trash2Icon}
+        action="remove"
+        onPress={onRemoveVisitHandle}
+      />
 
       {isModalVisible && (
         <ConfirmationModal
-          isVisible={isModalVisible}
+          visible={isModalVisible}
+          onConfirm={() => {}}
           onClose={() => {
             setIsModalVisible(false);
           }}
@@ -42,26 +63,3 @@ export default function VisistOptionsCard({ visitId }: VisistOptionsCardProps) {
     </View>
   );
 }
-
-const ConfirmationModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: () => void }) => {
-  const { t } = useTranslation();
-
-  return (
-    <Modal
-      animationType="slide"
-      transparent={true}
-      visible={isVisible}
-      onRequestClose={() => {
-        Alert.alert("Modal has been closed.");
-        onClose();
-      }}>
-      <View className="flex-1 items-center justify-center">
-        <TextStyled>{t("common.are-you-sure")}</TextStyled>
-        <View className="flex gap-4">
-          <ButtonStyled text={t("common.yes")} />
-          <ButtonStyled type="outlined" text={t("common.no")} onPress={onClose} />
-        </View>
-      </View>
-    </Modal>
-  );
-};

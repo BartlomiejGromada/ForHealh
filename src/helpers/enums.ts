@@ -1,4 +1,4 @@
-import { DoctorProfession } from "@/types/Visit";
+import { DoctorProfession, VisitStatus } from "@/types/Visit";
 
 export const doctorTypeTranslationKeys: Record<DoctorProfession, string> = {
   [DoctorProfession.Pediatrician]: "common.doctor-types.pediatrician",
@@ -8,4 +8,10 @@ export const doctorTypeTranslationKeys: Record<DoctorProfession, string> = {
   [DoctorProfession.Physiotherapist]: "common.doctor-types.physiotherapist",
   [DoctorProfession.Neurologist]: "common.doctor-types.neurologist",
   [DoctorProfession.Orthopaedist]: "common.doctor-types.orthopaedist",
+};
+
+export const visitStatusTranslationKeys: Record<VisitStatus, string> = {
+  [VisitStatus.New]: "visits.statuses.new",
+  [VisitStatus.Canceled]: "visits.statuses.canceled",
+  [VisitStatus.Finished]: "visits.statuses.finished",
 };

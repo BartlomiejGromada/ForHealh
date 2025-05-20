@@ -8,8 +8,15 @@ export enum DoctorProfession {
   Orthopaedist = 6,
 }
 
+export enum VisitStatus {
+  New = 0,
+  Canceled = 1,
+  Finished = 2,
+}
+
 export type Visit = {
   id: string;
+  status: VisitStatus;
   doctor: {
     name: string;
     profession: DoctorProfession;

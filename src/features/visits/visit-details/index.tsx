@@ -1,7 +1,7 @@
 import ScreenHeader from "@/components/ScreenHeader";
 import ScreenWrapper from "@/components/ScreenWrapper";
 import StandaloneScreenWrapper from "@/components/StandaloneScreenWrapper";
-import { DoctorProfession, Visit } from "@/types/Visit";
+import { DoctorProfession, Visit, VisitStatus } from "@/types/Visit";
 import React, { Fragment } from "react";
 import { useTranslation } from "react-i18next";
 import { View } from "react-native";
@@ -20,6 +20,7 @@ export default function VisitDetails({ visitId }: VisitDetailsProps) {
 
   const visit: Visit = {
     id: "visit123",
+    status: VisitStatus.New,
     doctor: {
       name: "Dr. John Doe",
       profession: DoctorProfession.Cardiologist,
@@ -38,6 +39,7 @@ export default function VisitDetails({ visitId }: VisitDetailsProps) {
         <StandaloneScreenWrapper isLoading={false} isError={false}>
           <View className="flex gap-6">
             <VisitDoctorCard
+              visitStatus={visit.status}
               doctorName={visit.doctor.name}
               doctorProfession={visit.doctor.profession}
             />

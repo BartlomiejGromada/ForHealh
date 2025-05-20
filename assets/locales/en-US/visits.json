@@ -3,5 +3,10 @@
   "information-about-visit": "Information about the visit",
   "additional-options": "Additional options",
   "cancel-visit": "Cancel visit",
-  "remove-visit": "Remove visit"
+  "remove-visit": "Remove visit",
+  "statuses": {
+    "new": "New",
+    "canceled": "Canceled",
+    "finished": "Finished"
+  }
 }

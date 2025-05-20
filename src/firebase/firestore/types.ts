@@ -1,7 +1,8 @@
-import { DoctorProfession } from "@/types/Visit";
+import { DoctorProfession, VisitStatus } from "@/types/Visit";
 import { Timestamp } from "firebase/firestore";
 
 export type VisitFirestore = {
+  status: VisitStatus;
   doctor: {
     name: string;
     profession: DoctorProfession;
