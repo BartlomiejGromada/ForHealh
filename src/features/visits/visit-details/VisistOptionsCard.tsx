@@ -1,9 +1,17 @@
 import ConfirmationModal from "@/components/ui/ConfirmationModal";
 import TextStyled from "@/components/ui/TextStyled";
-import { EditIcon, Trash2Icon, XIcon } from "lucide-react-native";
+import {
+  ArrowDownIcon,
+  ArrowUpIcon,
+  CheckIcon,
+  EditIcon,
+  TrashIcon,
+  XIcon,
+} from "lucide-react-native";
 import React, { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { View } from "react-native";
+import { Menu } from "react-native-paper";
 import ActionButton from "../components/ActionButton";
 
 type VisistOptionsCardProps = {
@@ -25,7 +33,7 @@ export default function VisistOptionsCard({ visitId }: VisistOptionsCardProps) {
   }, []);
 
   return (
-    <View className="flex justify-center bg-card-light dark:bg-card-dark p-4 rounded-lg gap-4">
+    <View className="flex bg-card-light dark:bg-card-dark p-4 rounded-lg gap-4">
       <TextStyled
         type="bold"
         className="text-xl dark:color-typography-white">{`${t("visits.additional-options")}:`}</TextStyled>
@@ -33,23 +41,13 @@ export default function VisistOptionsCard({ visitId }: VisistOptionsCardProps) {
       <ActionButton
         text={t("common.edit")}
         Icon={EditIcon}
-        action="edit"
+        action="basic"
         onPress={() => {
           // TODO
         }}
       />
-      <ActionButton
-        text={t("visits.cancel-visit")}
-        Icon={XIcon}
-        action="cancel"
-        onPress={onCancelVisitHandle}
-      />
-      <ActionButton
-        text={t("visits.remove-visit")}
-        Icon={Trash2Icon}
-        action="remove"
-        onPress={onRemoveVisitHandle}
-      />
+
+      <ActionMenu />
 
       {isModalVisible && (
         <ConfirmationModal
@@ -63,3 +61,54 @@ export default function VisistOptionsCard({ visitId }: VisistOptionsCardProps) {
     </View>
   );
 }
+
+const ActionMenu = () => {
+  const { t } = useTranslation();
+
+  const [isMenuVisible, setIsMenuVisible] = useState(false);
+
+  return (
+    <Menu
+      visible={isMenuVisible}
+      style={{ width: 340 }}
+      anchor={
+        <ActionButton
+          text={t("common.actions")}
+          action="basic"
+          Icon={isMenuVisible ? ArrowUpIcon : ArrowDownIcon}
+          onPress={() => setIsMenuVisible(true)}
+        />
+      }
+      anchorPosition="bottom"
+      mode="flat"
+      onDismiss={() => {
+        setIsMenuVisible(false);
+      }}>
+      <View className="flex gap-2">
+        <ActionButton
+          text={t("visits.mark-visit-as-finished")}
+          Icon={CheckIcon}
+          action="finish"
+          buttonClassName="bg-primary-100"
+          onPress={() => setIsMenuVisible(true)}
+        />
+
+        <ActionButton
+          text={t("visits.cancel-visit")}
+          Icon={XIcon}
+          action="cancel"
+          buttonClassName="bg-primary-100"
+          onPress={() => setIsMenuVisible(true)}
+        />
+
+        <ActionButton
+          text={t("visits.remove-visit")}
+          Icon={TrashIcon}
+          action="remove"
+          buttonClassName="bg-primary-100"
+          onPress={() => setIsMenuVisible(true)}
+        />
+      </View>
+    </Menu>
+  );
+};

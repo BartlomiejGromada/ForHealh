@@ -4,6 +4,7 @@
   "additional-options": "Dodatkowe opcje",
   "cancel-visit": "Anuluj visit",
   "remove-visit": "Usuń wizytę",
+  "mark-visit-as-finished": "Oznacz wizytę jako zakończoną",
   "statuses": {
     "new": "Nowa",
     "canceled": "Anulowana",

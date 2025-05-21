@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import "react-native-reanimated";
 import Toast from "react-native-toast-message";
 import "../global.css";
+import { PaperProvider } from "react-native-paper";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -35,10 +36,12 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider>
-      <Stack screenOptions={{ headerShown: false }}>
-        <Slot />
-        <Toast config={toastConfig} />
-      </Stack>
+      <PaperProvider>
+        <Stack screenOptions={{ headerShown: false }}>
+          <Slot />
+          <Toast config={toastConfig} />
+        </Stack>
+      </PaperProvider>
     </ThemeProvider>
   );
 }
