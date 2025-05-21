@@ -22,6 +22,7 @@ export const useFetch = <T>({
 
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   const fetch = useCallback(async () => {
     setIsLoading(true);
@@ -43,13 +44,7 @@ export const useFetch = <T>({
       }
     } catch (error) {
       console.error(error);
-
-      Toast.show({
-        type: "error",
-        text1: t("common.error"),
-        text2: t("errors.something-went-wrong", { ns: "common" }),
-        props: { theme },
-      });
+      setIsError(true);
 
       if (onError) {
         onError(error);
@@ -59,5 +54,5 @@ export const useFetch = <T>({
     }
   }, [onFetch, onSuccess, onError, t, i18nNamespace, theme]);
 
-  return { fetch, isLoading, isSuccess };
+  return { fetch, isLoading, isSuccess, isError };
 };

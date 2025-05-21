@@ -25,6 +25,7 @@ export async function visitByIdRequest({
 
     const visit: Visit = {
       id: doc.id,
+      status: doc.data()!.status,
       doctor: {
         name: doc.data()!.doctor.name,
         profession: doc.data()!.doctor.profession,

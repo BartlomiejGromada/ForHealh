@@ -36,7 +36,7 @@ export default function VisitInformationsCard({
 
       <View className="flex flex-row items-center gap-2">
         <NotepadTextIcon color={COLORS.primary[500]} />
-        <TextStyled className="color-typography-500">{comment}</TextStyled>
+        <TextStyled className="color-typography-500">{comment ?? "-"}</TextStyled>
       </View>
     </View>
   );

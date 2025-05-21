@@ -3,13 +3,13 @@ import { ThemeProvider } from "@/providers/ThemeProvider";
 import "@/utils/language/i18nConfig"; // This line imports the i18n configuration
 import { toastConfig } from "@/utils/toast-message/toastConfig";
 import { useFonts } from "expo-font";
-import { Slot, Stack } from "expo-router";
+import { Slot } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
+import { PaperProvider } from "react-native-paper";
 import "react-native-reanimated";
 import Toast from "react-native-toast-message";
 import "../global.css";
-import { PaperProvider } from "react-native-paper";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -37,10 +37,8 @@ export default function RootLayout() {
   return (
     <ThemeProvider>
       <PaperProvider>
-        <Stack screenOptions={{ headerShown: false }}>
-          <Slot />
-          <Toast config={toastConfig} />
-        </Stack>
+        <Slot screenOptions={{ headerShown: false }} />
+        <Toast config={toastConfig} />
       </PaperProvider>
     </ThemeProvider>
   );

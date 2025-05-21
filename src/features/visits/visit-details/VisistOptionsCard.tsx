@@ -1,5 +1,6 @@
 import ConfirmationModal from "@/components/ui/ConfirmationModal";
 import TextStyled from "@/components/ui/TextStyled";
+import { VisitStatus } from "@/types/Visit";
 import {
   ArrowDownIcon,
   ArrowUpIcon,
@@ -13,6 +14,7 @@ import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 import { Menu } from "react-native-paper";
 import ActionButton from "../components/ActionButton";
+import { useVisitUpdate } from "./hooks/useVisitUpdate";
 
 type VisistOptionsCardProps = {
   visitId: string;
@@ -47,7 +49,7 @@ export default function VisistOptionsCard({ visitId }: VisistOptionsCardProps) {
         }}
       />
 
-      <ActionMenu />
+      <ActionMenu visitId={visitId} />
 
       {isModalVisible && (
         <ConfirmationModal
@@ -62,10 +64,20 @@ export default function VisistOptionsCard({ visitId }: VisistOptionsCardProps) {
   );
 }
 
-const ActionMenu = () => {
+const ActionMenu = ({ visitId }: { visitId: string }) => {
   const { t } = useTranslation();
 
   const [isMenuVisible, setIsMenuVisible] = useState(false);
+
+  const { mutation, isLoading } = useVisitUpdate({ visitId });
+
+  const onVisitStatusChange = useCallback(
+    async (newStatus: VisitStatus) => {
+      await mutation(newStatus);
+      setIsMenuVisible(false);
+    },
+    [mutation]
+  );
 
   return (
     <Menu
@@ -90,7 +102,8 @@ const ActionMenu = () => {
           Icon={CheckIcon}
           action="finish"
           buttonClassName="bg-primary-100"
-          onPress={() => setIsMenuVisible(true)}
+          isLoading={isLoading}
+          onPress={async () => await onVisitStatusChange(VisitStatus.Finished)}
         />
 
         <ActionButton
@@ -98,7 +111,8 @@ const ActionMenu = () => {
           Icon={XIcon}
           action="cancel"
           buttonClassName="bg-primary-100"
-          onPress={() => setIsMenuVisible(true)}
+          isLoading={isLoading}
+          onPress={async () => await onVisitStatusChange(VisitStatus.Canceled)}
         />
 
         <ActionButton
@@ -106,7 +120,11 @@ const ActionMenu = () => {
           Icon={TrashIcon}
           action="remove"
           buttonClassName="bg-primary-100"
-          onPress={() => setIsMenuVisible(true)}
+          isLoading={isLoading}
+          onPress={async () => {
+            //TODO: Usuń
+            setIsMenuVisible(true);
+          }}
         />
       </View>
     </Menu>

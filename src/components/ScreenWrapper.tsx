@@ -21,6 +21,7 @@ export default function ScreenWrapper({
   return (
     <SafeAreaView className="flex-1 dark:bg-background-dark h-full">
       <StatusBar style="auto" />
+
       <ScrollView className="px-6">
         <View className={`flex flex-row justify-between ${title ? "pt-10" : ""} items-center pb-4`}>
           {title && (

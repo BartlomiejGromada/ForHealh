@@ -1,7 +1,8 @@
 import { useFetch } from "@/hooks/useFetch";
 import { useUserId } from "@/hooks/useUserId";
+import { useAppStore } from "@/store";
 import { Visit } from "@/types/Visit";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { visitByIdRequest } from "../api/vistiByIdRequest";
 
 type useVisitDetailsProps = {
@@ -11,18 +12,22 @@ type useVisitDetailsProps = {
 export const useVisitDetails = ({ visitId }: useVisitDetailsProps) => {
   const userId = useUserId();
 
-  const [visit, setVisit] = useState<Visit | null>();
+  const setDetaislOfVisit = useAppStore(state => state.setDetaislOfVisit);
+  const detailsOfVisit = useAppStore(state => state.detailsOfVisit);
 
   const fetchVisitDetails = useCallback(
     () => visitByIdRequest({ userId, visitId }),
     [userId, visitId]
   );
 
-  const handleFetchSuccess = useCallback((payload: Visit | null) => {
-    setVisit(payload);
-  }, []);
+  const handleFetchSuccess = useCallback(
+    (payload: Visit | null) => {
+      setDetaislOfVisit(payload);
+    },
+    [setDetaislOfVisit]
+  );
 
-  const { fetch, isLoading, isSuccess } = useFetch<Visit | null>({
+  const { fetch, isLoading, isSuccess, isError } = useFetch<Visit | null>({
     onFetch: fetchVisitDetails,
     onSuccess: handleFetchSuccess,
   });
@@ -31,5 +36,5 @@ export const useVisitDetails = ({ visitId }: useVisitDetailsProps) => {
     fetch();
   }, [fetch]);
 
-  return { visit, isLoading, isSuccess };
+  return { visit: detailsOfVisit, isLoading, isSuccess, isError };
 };
