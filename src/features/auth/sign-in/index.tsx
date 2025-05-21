@@ -5,7 +5,7 @@ import TextPressable from "@/components/ui/TextPressable";
 import TextStyled from "@/components/ui/TextStyled";
 import PasswordInput from "@/features/auth/components/PasswordInput";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "expo-router";
+import { router, useNavigation, useRouter } from "expo-router";
 import { MailIcon } from "lucide-react-native";
 import React, { useEffect } from "react";
 import { Control, Controller, FieldErrors, useForm } from "react-hook-form";
@@ -20,7 +20,7 @@ type SignInFormType = {
 };
 
 export default function SignInForm() {
-  const { navigate } = useRouter();
+  const navigation = useNavigation();
 
   const {
     control,
@@ -43,9 +43,9 @@ export default function SignInForm() {
 
   useEffect(() => {
     if (isSuccess) {
-      navigate("/(root)");
+      router.replace("/(root)");
     }
-  }, [isSuccess, navigate]);
+  }, [isSuccess, navigation]);
 
   return (
     <ScreenAuthWrapper className="justify-start items-start">
